@@ -1,0 +1,49 @@
+<div class='card'>
+  <div class='card-header'>
+    {{pageTitle}}
+  </div>
+  <div class='card-body'>
+    <div class='row'>
+      <div class='col-md-2'>Filter by:</div>
+      <div class='col-md-4'>
+        <input type='text'
+               [(ngModel)]='listFilter' />
+      </div>
+    </div>
+    <div class='row'
+         *ngIf='listFilter'>
+      <div class='col-md-6'>
+        <h4>Filtered by: {{listFilter}}</h4>
+      </div>
+    </div>
+    <div class='table-responsive'>
+      <table class='table'
+             *ngIf='suites && suites.length'>
+        <thead>
+          <tr>
+            <th>Suite Name</th>
+            <th>suiteOwner</th>
+            <th>createdDate</th>
+            <th>createdBy</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let suite of filteredSuites'>
+            <td>
+              <a [routerLink]="['/testSuite', suite.suiteName]">
+                {{ suite.suiteName }}
+              </a>
+            </td>
+            <td>{{ suite.suiteOwner | lowercase | convertToSpaces: '-' }}</td>
+            <td>{{ suite.createdDate }}</td>
+            <td>{{ suite.createdBy }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf='errorMessage'
+     class='alert alert-danger'>
+  Error: {{ errorMessage }}
+</div>
